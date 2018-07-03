@@ -12,5 +12,5 @@ spec:
       containers:
       - name: birthday
         image: mtoto/birthday-demo
-        command: ["Rscript", "birthday_sim.R $ITEM"]
+        command: ["Rscript", "birthday.R $ITEM"]
       restartPolicy: Never
