@@ -1,6 +1,4 @@
 #!/usr/bin/env Rscript
-args = commandArgs(trailingOnly=TRUE)
-n <- as.double(args[1])
 
 mean_change = 1.001 
 volatility = 0.01 
