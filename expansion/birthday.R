@@ -11,4 +11,4 @@ pbirthdaysim <- function(n) {
         sum(sapply(seq(ntests), anydup)) / ntests 
 }
 
-pbirthday(n)
+pbirthdaysim(n)
