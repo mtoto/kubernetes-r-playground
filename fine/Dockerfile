@@ -1,5 +1,5 @@
 FROM rocker/r-base
-RUN install2.r -e  RMySQL redux caret 
-COPY ./worker.py /worker.py
+RUN install2.r -e redux caret nycflights13 uuid digest stringi utf8
+COPY ./worker2.R /worker2.R
 
-CMD Rscript worker.py
+CMD Rscript worker2.R
