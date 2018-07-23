@@ -1,14 +1,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: job-wq-2
+  name: job-fine-test
 spec:
   parallelism: 2
   template:
     metadata:
-      name: job-wq-2
+      name: job-fine-test
+      labels:
+        jobgroup: fine-example
     spec:
       containers:
       - name: c
-        image: gcr.io/myproject/job-wq-2
+        image: mtoto/job-fine-test
       restartPolicy: OnFailure

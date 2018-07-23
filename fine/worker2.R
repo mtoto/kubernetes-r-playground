@@ -3,15 +3,15 @@ source("rediswq.R")
 library(stringi)
 library(utf8)
                
-host <- "redis"
+host <- Sys.getenv("REDIS_SERVICE_HOST")
 
-q <- RedisWQ(name = "test", host = "redis")
+q <- RedisWQ$new(name = "test", host = host)
 
 print(paste0("Worker with sessionID: ", q$sessionID()))
 
 print(paste0("Initial queue state: empty=", as.character(q$empty())))
 
-while (!q.empty()) {
+while (!q$empty()) {
     item <- q$lease(lease_secs=10,
                     block = TRUE,
                     timeout = 2)

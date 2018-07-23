@@ -1,19 +1,23 @@
-# modeling function
-library(nycflights13)
-library(redux)
-library(caret)
+library(stringi)
+library(utf8)
+source("rediswq.R")
 
-nycflights <- as.data.frame(unclass(flights))
+host <- Sys.getenv("REDIS_SERVICE_HOST")
+db <- redis_init(host = host)
+vars_init("test")
 
-model_delay <- function(x) {
-    train(dep_delay ~., 
-          data = nycflights, 
-          method = x$value)
+print(paste0("Worker with sessionID: ", session))
+
+print(paste0("Initial queue state: empty=", as.character(empty())))
+
+while (!empty()) {
+        item <- lease(lease_secs=10,
+                        block = TRUE,
+                        timeout = 2)
+        if (!is.null(item)) {
+                print(paste0("working on: ", item))
+                paste0(item, " yeah baby") # actual work, this does not save only print statements
+                complete(item)
+        }
 }
-               
-res <- r$subscribe("mychannel",
-                   transform = model_delay,
-                   terminate = function(x) identical(x, "goodbye"))
-                   
-res             
-                   
+print("queue emtpy, finished")
