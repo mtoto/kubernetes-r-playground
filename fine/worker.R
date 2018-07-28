@@ -1,13 +1,17 @@
-library(stringi)
-library(utf8)
 source("rediswq.R")
+source("functions.R")
 
+# connect to redis host
 host <- Sys.getenv("REDIS_SERVICE_HOST")
 db <- redis_init(host = host)
 vars_init("test")
 
-print(paste0("Worker with sessionID: ", session))
+# authenticate gcs
+auth <- Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+Sys.setenv("GCS_AUTH_FILE" = auth)
+library(googleCloudStorageR)
 
+print(paste0("Worker with sessionID: ", session))
 print(paste0("Initial queue state: empty=", as.character(empty())))
 
 while (!empty()) {
@@ -16,8 +20,11 @@ while (!empty()) {
                         timeout = 2)
         if (!is.null(item)) {
                 print(paste0("working on: ", item))
-                paste0(item, " yeah baby") # actual work, this does not save only print statements
+                # actual work
+                run_save_model(item)
                 complete(item)
+        } else {
+          print("waiting for work")       
         }
 }
 print("queue emtpy, finished")

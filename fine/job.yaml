@@ -1,16 +1,27 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: job-fine-test
+  name: fine-demo
 spec:
   parallelism: 2
   template:
     metadata:
-      name: job-fine-test
+      name: fine-example
       labels:
         jobgroup: fine-example
     spec:
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: gcs-key
       containers:
       - name: c
-        image: mtoto/job-fine-test
+        image: mtoto/ml-demo
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+        command: ["Rscript", "worker.R"]
       restartPolicy: OnFailure
