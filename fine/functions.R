@@ -15,7 +15,7 @@ run_save_model <- function(method) {
         # upload to storage bucket
         file <- sprintf("%s_model.rds", method)
         saveRDS(model, file)
-        gcs_upload(file, 
+        googleCloudStorageR::gcs_upload(file, 
                    name = file,
                    bucket = "bostonmodels")
 }
