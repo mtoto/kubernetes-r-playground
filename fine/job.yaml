@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: fine-demo
 spec:
-  parallelism: 2
+  parallelism: 4
   template:
     metadata:
       name: fine-example
@@ -21,7 +21,7 @@ spec:
         - name: google-cloud-key
           mountPath: /var/secrets/google
         env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
+        - name: GCS_AUTH_FILE
           value: /var/secrets/google/key.json
         command: ["Rscript", "worker.R"]
       restartPolicy: OnFailure

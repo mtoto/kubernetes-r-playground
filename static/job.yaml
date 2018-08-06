@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: static-demo
 spec:
-  parallelism: 2
+  parallelism: 20
   completions: 100
   template:
     metadata:

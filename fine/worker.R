@@ -7,8 +7,6 @@ db <- redis_init(host = host)
 vars_init("test")
 
 # authenticate gcs
-auth <- Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-Sys.setenv("GCS_AUTH_FILE" = auth)
 library(googleCloudStorageR)
 
 print(paste0("Worker with sessionID: ", session))

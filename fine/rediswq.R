@@ -4,7 +4,7 @@ library(uuid)
 library(digest)
 
 redis_init <- function(host) {
-        redux::hiredis(host = host, port = 6379)
+        hiredis(host = host, port = 6379)
 }
 
 vars_init <- function(name) {
