@@ -14,19 +14,19 @@ vars_init <- function(name) {
         lease_key_prefix <<- paste0(name, "leased_by_session")
 }
 
-main_qsize = function(db) {
+main_qsize <- function(db) {
         return(db$LLEN(main_q_key))
 }
 
-processing_qsize = function(db) {
+processing_qsize <- function(db) {
         return(db$LLEN(processing_q_key))
 }
 
-empty = function() {
+empty <- function() {
         main_qsize(db) == 0 & processing_qsize(db) == 0
 }
 
-itemkey = function(item) {
+itemkey <- function(item) {
         return(digest(item, algo="sha256", serialize=FALSE))
 }
 
@@ -34,7 +34,7 @@ itemkey = function(item) {
 #         return(db$EXISTS(paste0(lease_key_prefix, itemkey(item))))
 # }
 
-lease = function(lease_secs = 60, block = TRUE, timeout = NA) {
+lease <- function(lease_secs = 60, block = TRUE, timeout = NA) {
         if (block) {
                 item <- db$BRPOPLPUSH(main_q_key,
                                       processing_q_key,
@@ -52,7 +52,7 @@ lease = function(lease_secs = 60, block = TRUE, timeout = NA) {
         return(item)
 }
 
-complete = function(value) {
+complete <- function(value) {
         db$LREM(processing_q_key, 0, value)
         itemkey <- itemkey(value)
         db$DEL(paste0(lease_key_prefix,
