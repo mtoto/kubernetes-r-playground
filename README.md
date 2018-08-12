@@ -1,4 +1,4 @@
-# Parallelizing R code on kubernetes
+# Parallelizing R code on Kubernetes
 
 This repository contains all the code described in my [blog post](http://tamaszilagyi.com/blog/parallelizing-r-code-on-kubernetes/) about parallelizing R scripts on kubernetes. The idea is to demonstrate different approaches available in kubernetes for parallelization. 
 
